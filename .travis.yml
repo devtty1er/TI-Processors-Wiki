@@ -1,0 +1,18 @@
+language: minimal
+services:
+- docker
+env:
+  global:
+  - secure: N55VQW1Be9Pq3EdgXMOsopYFWZkqzvpyLDeSIj4SSOSp81Kduda32G+y42v65r8vpMlttNss+wJGsHERskbvH/xt8XJd8pJrY3Qp+P7pZcd2Bxb09uY+Ec5Jl82m4Hf42qykADlBQFy1NN6C21uDbNio+1Uz1rug9BaLrI56E+zPbD9vdRjlx4n0D1Lir0brHK766Tjk35EU49FL3EKzNJFoOIYvhQ613n9BJq0M2KvVf45DuXxjrHJBx9acPA0iiKRU12pPl73FjwBiI8A9EtKqvDjqhl2jQDo+f0Rb7pHNk7vaZgPMpbTUwcSz09tK/7QIfekTB7XqD+k2JZ8EjBxD5mH5SDJs6ynF1oZohQGLOIqhLA5GF+f5Reo9TjgeWGiduLCbbuDw+o2PBgLPjNjQabPwSXpHXmPAPjVtc8eT/gVSs4fUguzQDVQ57XmdHFkZOpviyxkVILDgP3hkOpXJ+0ptuEFeFEgXYiJgm78NWfr1ck/3tH1affuj6CoCvqEEW0Y2Sk/hwmOQ83JTiaKIktBzKvmj5TEyjC+QHUSihxmDkK5bodFpntC/f911GV393IlJvvTmqNcoZEL4MJUd2lDpZ4muCMxOQnM1J27AEaHoC/W76kpySo2numa4dNaaNq+jzstA/9OeNjES1+io+GKJaUqh3g83IJtePcE=
+  - DOCKER_USER=devtty1er
+  - DOCKER_IMAGE=devtty1er/ti-processors-wiki
+before_install:
+- echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USER" --password-stdin
+script:
+- docker build . --tag "$DOCKER_IMAGE"
+deploy:
+  provider: script
+  script:
+  - docker push "$DOCKER_IMAGE"
+  on:
+    all_branches: true
